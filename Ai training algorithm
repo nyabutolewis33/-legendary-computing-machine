@@ -1,0 +1,25 @@
+import numpy as np
+from keras.models import Sequential
+from keras.layers import Dense
+
+# Define the training data (inputs and expected outputs)
+X_train = np.array([[0,0], [0,1], [1,0], [1,1]])
+y_train = np.array([[0], [1], [1], [0]])
+
+# Define the model architecture
+model = Sequential()
+model.add(Dense(4, input_dim=2, activation='relu'))
+model.add(Dense(1, activation='sigmoid'))
+
+# Compile the model with a loss function and optimizer
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+# Train the model on the training data
+model.fit(X_train, y_train, epochs=1000, verbose=0)
+
+# Test the trained model on some new data
+X_test = np.array([[0,0], [0,1], [1,0], [1,1]])
+y_test = np.array([[0], [1], [1], [0]])
+
+scores = model.evaluate(X_test, y_test, verbose=0)
+print("Accuracy: %.2f%%" % (scores[1]*100))
